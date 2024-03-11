@@ -21,7 +21,7 @@ userRoute.post("/sign-up", (req,res) => {
           profession: createdUser.profession,
           contact: createdUser.contact,
           address: createdUser.address,
-          gender: createdUser.gender,
+          sex: createdUser.sex,
           diagnosis: createdUser.diagnosis
         })
       }).catch((err) => {
@@ -51,7 +51,7 @@ userRoute.get("/login", (req,res) => {
         profession: existingUser.profession,
         contact: existingUser.contact,
         address: existingUser.address,
-        gender: existingUser.gender,
+        sex: existingUser.sex,
         diagnosis: existingUser.diagnosis
       })
     } else {
@@ -68,6 +68,7 @@ userRoute.get("/all", (req,res) => {
   UserDataModel.find().then((allUsers) => {
     let usersInfo = allUsers.map((user) => {
       return ( {
+      userId: user._id,
       isAdmin: user.isAdmin,
       email: user.email,
       name: user.name,
@@ -75,7 +76,7 @@ userRoute.get("/all", (req,res) => {
       profession: user.profession,
       contact: user.contact,
       address: user.address,
-      gender: user.gender,
+      sex: user.sex,
       diagnosis: user.diagnosis })
     })
     res.send(usersInfo);

@@ -1,0 +1,4 @@
+
+.was-validated .form-control:valid {
+  border: 1px solid #ced4da;
+}
