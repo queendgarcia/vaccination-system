@@ -6,10 +6,10 @@ mongooseObject.connect("mongodb://127.0.0.1/vaccination-system");
 let vaccineSchema = new schemaObject({
   name: { type: String, required: true},
   type: {type: String, required: true},
-  price: String, 
-  sideEffects: String,
-  origin: String,
+  price: {type: String, required: true}, 
   requiredDosage: {type: Number, required: true},
+  origin: String,
+  sideEffects: String,
   otherInfo: String
 },
 {

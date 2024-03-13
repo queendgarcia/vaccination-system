@@ -15,6 +15,9 @@ const vaccineRoutes = require("./router/vaccine-route");
 
 app.use(cors()); 
 // enabling cross-origin resource sharing at root level
+app.use('/static', express.static('public'))
+//setting up the middleware static to handle all the static files we need to serve to client
+// serve static files like images css using static middleware 
 
 app.use(express.json({limit:'2mb', extended:false})); 
 //json middle-ware for setting request content type to json in body

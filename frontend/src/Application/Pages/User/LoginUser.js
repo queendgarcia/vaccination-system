@@ -1,14 +1,20 @@
-import React, {useRef} from 'react'
-import { Container } from 'react-bootstrap'
+import React, {useRef, useState} from 'react'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 import SingleForm from '../../Components/SingleForm'
-import { useSelector } from 'react-redux'
+import {  useDispatch } from 'react-redux'
+import { LoginUserAction, AddUserToStore } from '../../../State/User/userAction'
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginUser = () => {
   let email = useRef("");
   let password = useRef("");
+  let [passwordMsg, setPasswordMsg] = useState("");
 
-  let loggedInUser = useSelector((state) => state.UserReducer.User)
-  console.log("loggedInUser: " + JSON.stringify(loggedInUser))
+  let dispatchAction = useDispatch();
+  let navigate = useNavigate();
+  
+  const url = "http://localhost:9000/user";
 
   let inputs = [  {
     id:"email",
@@ -24,19 +30,52 @@ const LoginUser = () => {
     feedbackInvalid: "Please provide a password",
     isRequired: true
   }
-]
+  ]
 
-let submitInputs = (inputValues) => {
-  console.log("from loginuser")
-  inputValues.forEach( input => console.log(input.value))
-  console.log("loggedInUser: " + JSON.stringify(loggedInUser))
+  let submitInputs = (inputValues) => {
+    console.log("from loginuser")
+    inputValues.forEach( input => console.log(input.value))
+    let userDetails = {
+      email: inputValues[0].value,
+      password : inputValues[1].value
+    } 
 
-}
+    let element_email = document.getElementById("input-email");
+    element_email.classList.remove("input-error");
+    let element_pw = document.getElementById("input-password");
+    element_pw.classList.remove("input-error");
+    
+    axios.post(`${url}/login`,
+      userDetails 
+    )
+    .then((user)=>{
+      let loggedInUser = user.data;
+      dispatchAction(AddUserToStore(loggedInUser))
+      localStorage.setItem("email", loggedInUser.email)
+      localStorage.setItem("userId", loggedInUser._id)
+      localStorage.setItem("isAdmin", loggedInUser.isAdmin)
+      navigate("/home");
+    })
+    .catch((err)=>{
+      let errorMessage = err.response.data.error
+      if (errorMessage == "User does not exist") element_email.classList.add("input-error")
+      else if (errorMessage == "Wrong Password") element_pw.classList.add("input-error")
+    })
+  }
 
   return (
     <>
-      <Container className="mt-5">
-        <SingleForm inputs={inputs} submitInputs={submitInputs} />
+      <Container>
+        <Row className="full-height center-element">
+          <Col md={6}>
+            <Card>
+              <Card.Body className="p-5">
+                <h2 className="text-center text2">LOGIN USER</h2>
+                <SingleForm inputs={inputs} submitInputs={submitInputs} />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </>
   )

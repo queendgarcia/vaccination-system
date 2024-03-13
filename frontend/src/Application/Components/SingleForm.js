@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import {Form, Button} from "react-bootstrap";
+import {Form, Button, Col} from "react-bootstrap";
 
 const SingleForm = (props) => {
   let {inputs} = props;
@@ -31,10 +31,20 @@ const SingleForm = (props) => {
           inputs && inputs.length > 0 ? 
           inputs.map( (input, i) => {
             return (
-              <Form.Group key={input.id}>
+              <Form.Group className="my-3" key={input.id} >
                 <Form.Label>{input.label}</Form.Label>
-                  <Form.Control as={input.controlAs} rows={input.rows} required={input.isRequired}
-                  type={input.controlType} ref={(el) => (inputRefs.current[i] = el)} />
+                  {
+                    input.selectOptions && (input.selectOptions).length > 0 ?
+                    <Form.Control id={"input-"+(input.id)} as={input.controlAs} rows={input.rows} required={input.isRequired} type={input.controlType} ref={(el) => (inputRefs.current[i] = el)} >
+                      { 
+                        (input.selectOptions).map( (selectType) => 
+                          <option key={selectType} value={selectType}>{selectType}</option>
+                        )
+                      }
+                    </Form.Control>
+                    :
+                    <Form.Control id={"input-"+(input.id)} as={input.controlAs} rows={input.rows} required={input.isRequired} type={input.controlType} ref={(el) => (inputRefs.current[i] = el)} />
+                  }
                 <Form.Control.Feedback type="invalid">{input.feedbackInvalid}</Form.Control.Feedback>
               </Form.Group>
             )
@@ -42,7 +52,7 @@ const SingleForm = (props) => {
           :
           <></>
         }
-        <Button className="mt-3" type="submit">Submit</Button>
+        <Button className="custom-btn max-width mt-3" type="submit">Submit</Button>
       </Form>
     </>
   )

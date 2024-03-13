@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 import SingleForm from '../../Components/SingleForm'
 
 const RegisterUser = () => {
@@ -38,31 +38,31 @@ const RegisterUser = () => {
     feedbackInvalid: "Please provide your contact information",
     isRequired: true,
   },
-  {
-    id: "address",
-    label: "Address:",
-    controlType: "text",
-    isRequired: false,
-  },
-  {
-    id: "profession",
-    label: "Profession:",
-    controlType: "text",
-    isRequired: false,
-  },
-  {
-    id: "sex",
-    label: "Sex: ",
-    controlType: "text",
-    isRequired: false
-  },
-  {
-    id: "diagnosis",
-    label: "Diagnosis: ",
-    controlType: "text",
-    controlAs: "textarea",
-    rows: 3,
-  }
+  // {
+  //   id: "address",
+  //   label: "Address:",
+  //   controlType: "text",
+  //   isRequired: false,
+  // },
+  // {
+  //   id: "profession",
+  //   label: "Profession:",
+  //   controlType: "text",
+  //   isRequired: false,
+  // },
+  // {
+  //   id: "sex",
+  //   label: "Sex: ",
+  //   controlType: "text",
+  //   isRequired: false
+  // },
+  // {
+  //   id: "diagnosis",
+  //   label: "Diagnosis: ",
+  //   controlType: "text",
+  //   controlAs: "textarea",
+  //   rows: 3,
+  // }
   ]
 
   let submitInputs = (inputValues) => {
@@ -72,8 +72,17 @@ const RegisterUser = () => {
 
   return (
     <>
-      <Container className="mt-5">
-        <SingleForm inputs={inputs} submitInputs={submitInputs} />
+      <Container>
+        <Row className="my-5 full-height center-element">
+          <Col md={6}>
+            <Card>
+              <Card.Body className="p-5">
+                <h2 className="text-center text2">REGISTER USER</h2>
+                <SingleForm inputs={inputs} submitInputs={submitInputs} />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </>
   )

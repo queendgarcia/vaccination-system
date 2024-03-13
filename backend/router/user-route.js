@@ -1,8 +1,8 @@
 let express = require("express");
-let userRoute = express.Router();
+let UserRoute = express.Router();
 const UserDataModel = require("../models/UserDataModel");
 
-userRoute.post("/sign-up", (req,res) => {
+UserRoute.post("/sign-up", (req,res) => {
   let user = req.body;
 
   UserDataModel.findOne({ email: req.body.email}).then((existingUser) => {
@@ -13,7 +13,7 @@ userRoute.post("/sign-up", (req,res) => {
       let newUser = new UserDataModel(user);
       newUser.save().then((createdUser) => {
         console.log("Successful Sign-Up", createdUser._id);
-        res.send({ userId: createdUser._id,
+        res.send({ _id: createdUser._id,
           isAdmin: createdUser.isAdmin,
           email: createdUser.email,
           name: createdUser.name,
@@ -36,39 +36,44 @@ userRoute.post("/sign-up", (req,res) => {
 
 })
 
-userRoute.get("/login", (req,res) => {
+UserRoute.post("/login", (req,res) => {
   let user = req.body
   console.log(user);
-
-  UserDataModel.findOne({ email: req.body.email, password: req.body.password}).then((existingUser) => {
+  
+  UserDataModel.findOne({ email: req.body.email}).then((existingUser) => {
     if (existingUser) {
-      console.log("User exists.")
-      res.send({ userId: existingUser._id,
-        isAdmin: existingUser.isAdmin,
-        email: existingUser.email,
-        name: existingUser.name,
-        age: existingUser.age,
-        profession: existingUser.profession,
-        contact: existingUser.contact,
-        address: existingUser.address,
-        sex: existingUser.sex,
-        diagnosis: existingUser.diagnosis
-      })
+      if (existingUser.password === req.body.password) {
+        console.log("User exists.")
+        res.send({  _id: existingUser._id,
+          isAdmin: existingUser.isAdmin,
+          email: existingUser.email,
+          name: existingUser.name,
+          age: existingUser.age,
+          profession: existingUser.profession,
+          contact: existingUser.contact,
+          address: existingUser.address,
+          sex: existingUser.sex,
+          diagnosis: existingUser.diagnosis
+        })
+      } else {
+        console.log("Wrong password");
+        res.status(401).json({ error: "Wrong Password" })
+      }
     } else {
-      res.send("User does not exist. Please sign up.")
+      res.status(401).json({ error: "User does not exist" })
     }
   }).catch((err) => {
-    console.log("Error Logging In");
-    res.send("Error while Logging In - Existing User", err);
+    // res.send("Error while Logging In - Existing User", err);
+    res.status(401).json({ error: "User does not exist" })
   })
 
 })
 
-userRoute.get("/all", (req,res) => {
+UserRoute.get("/all", (req,res) => {
   UserDataModel.find().then((allUsers) => {
     let usersInfo = allUsers.map((user) => {
       return ( {
-      userId: user._id,
+      _id: user._id,
       isAdmin: user.isAdmin,
       email: user.email,
       name: user.name,
@@ -85,4 +90,4 @@ userRoute.get("/all", (req,res) => {
   })
 })
 
-module.exports = userRoute;
+module.exports = UserRoute;
