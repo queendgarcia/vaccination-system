@@ -7,8 +7,12 @@ import { useNavigate } from 'react-router-dom'
 const VaccineList = () => {
   let dispatchAction = useDispatch();
   let registeredVaccines = useSelector((state) => state.VaccineReducer)
-
   console.log("from vaccine list: " + JSON.stringify(registeredVaccines));
+
+  // let userAdmin = useSelector((state) => state.UserReducer.User);
+  let userAdmin = localStorage.getItem("isAdmin") == "true" ? true : false
+  console.log("from hospital list: " + JSON.stringify(userAdmin))
+  
 
   let navigate = useNavigate()
 
@@ -25,7 +29,10 @@ const VaccineList = () => {
       <Row className="pt-5">
         <Col className="spaced-elements">
           <h1 className="text1">LIST OF VACCINES</h1>
-          <Button onClick={() => navigateToPage()} className="custom-btn">Register a Vaccine</Button>
+          {
+            userAdmin ? <Button onClick={() => navigateToPage()} className="custom-btn">Register a Vaccine</Button>
+            : <></>
+          }
         </Col>
       </Row>
       <Row className="center-element">

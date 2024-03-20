@@ -1,14 +1,30 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { AddUserToStore } from '../../../State/User/userAction'
+import { useDispatch } from 'react-redux'
 
 const AdminSection = () => {
 
   let navigate = useNavigate();
+  let dispatchAction = useDispatch();
 
   let navigateToPage = (page) => {
     navigate(`/${page}`)
   }
+
+  useEffect(() => {
+    let items = { ...localStorage };
+    console.log("from user-admin section before isAdmin change", items);
+    items = {...items, isAdmin: items.isAdmin == "true" ? true : false }
+    console.log("from user-admin section", items);
+    dispatchAction(AddUserToStore(items));
+    
+    localStorage.removeItem("contact")
+    localStorage.removeItem("address")
+    localStorage.removeItem("profession")
+
+  },[])
 
   return (
     <>
@@ -37,8 +53,8 @@ const AdminSection = () => {
                 </Card>
               </Col>
               <Col className="my-3" md={6}>
-                <Card onClick={() => navigateToPage("pending-approvals")}>
-                  <Card.Body><h2 className="text2">PENDING APPROVALS</h2></Card.Body>
+                <Card onClick={() => navigateToPage("pending-schedules")}>
+                  <Card.Body><h2 className="text2">PENDING SCHEDULES</h2></Card.Body>
                 </Card>
               </Col>
             </Row>

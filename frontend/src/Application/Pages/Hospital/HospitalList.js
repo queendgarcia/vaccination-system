@@ -7,8 +7,12 @@ import { useNavigate } from 'react-router-dom';
 const HospitalList = () => {
   let dispatchAction = useDispatch();
   let registeredHospitals = useSelector((state) => state.HospitalReducer)
-
   console.log("from hospital list: " + JSON.stringify(registeredHospitals));
+
+  // let userAdmin = useSelector((state) => state.UserReducer.User);
+  let userAdmin = localStorage.getItem("isAdmin") == "true" ? true : false
+  console.log("from hospital list: " + JSON.stringify(userAdmin))
+
 
   let navigate = useNavigate()
 
@@ -25,7 +29,10 @@ const HospitalList = () => {
       <Row className="pt-5">
         <Col className="spaced-elements">
           <h1 className="text1">LIST OF HOSPITALS</h1>
-          <Button onClick={() => navigateToPage()} className="custom-btn">Register a Hospital</Button>
+          {
+            userAdmin ? <Button onClick={() => navigateToPage()} className="custom-btn">Register a Hospital</Button>
+            : <></>
+          }
         </Col>
       </Row>
       <Row className="center-element">

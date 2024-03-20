@@ -1,15 +1,15 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import SingleForm from '../../Components/SingleForm'
 import {  useDispatch } from 'react-redux'
-import { LoginUserAction, AddUserToStore } from '../../../State/User/userAction'
+import {  AddUserToStore, RemoveUserFromStore } from '../../../State/User/userAction'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginUser = () => {
-  let email = useRef("");
-  let password = useRef("");
-  let [passwordMsg, setPasswordMsg] = useState("");
+  // let email = useRef("");
+  // let password = useRef("");
+  // let [passwordMsg, setPasswordMsg] = useState("");
 
   let dispatchAction = useDispatch();
   let navigate = useNavigate();
@@ -51,10 +51,12 @@ const LoginUser = () => {
     .then((user)=>{
       let loggedInUser = user.data;
       dispatchAction(AddUserToStore(loggedInUser))
-      localStorage.setItem("email", loggedInUser.email)
-      localStorage.setItem("userId", loggedInUser._id)
-      localStorage.setItem("isAdmin", loggedInUser.isAdmin)
-      navigate("/home");
+
+      for (const [key,value] of Object.entries(loggedInUser)) {
+        localStorage.setItem(key,value)
+      }
+      // navigate("/home");
+      window.location.assign(window.location.origin + "/home");
     })
     .catch((err)=>{
       let errorMessage = err.response.data.error
@@ -62,6 +64,11 @@ const LoginUser = () => {
       else if (errorMessage == "Wrong Password") element_pw.classList.add("input-error")
     })
   }
+
+  useEffect(() => {
+    localStorage.clear()
+    dispatchAction(RemoveUserFromStore());
+  },[])
 
   return (
     <>
