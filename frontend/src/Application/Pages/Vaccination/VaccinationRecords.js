@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVaccinationRecords } from '../../../State/VaccinationRecords/vaccinationRecordsAction';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import moment from 'moment';
 
 const VaccinationRecords = () => {
 
@@ -35,7 +36,7 @@ const VaccinationRecords = () => {
                     (record.dosesSupplied).map( (dose) => {
                       return ( 
                         <div key={dose.scheduleId} className="mb-5">
-                          <p>Vaccination Date - {new Date(dose.vaccinationSchedule).toLocaleDateString()}</p>
+                          <p>Vaccination Date - {moment(dose.vaccinationSchedule).utc().format("MM/DD/YYYY")}</p>
                           <p>{(dose.hospital.name)}, {(dose.vaccine.name)}</p>
                         </div>
                       )

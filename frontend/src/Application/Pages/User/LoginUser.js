@@ -7,10 +7,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginUser = () => {
-  // let email = useRef("");
-  // let password = useRef("");
-  // let [passwordMsg, setPasswordMsg] = useState("");
-
   let dispatchAction = useDispatch();
   let navigate = useNavigate();
   

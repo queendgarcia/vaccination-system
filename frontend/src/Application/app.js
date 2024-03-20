@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./app.css";
 import LoginUser from './Pages/User/LoginUser';
@@ -14,13 +13,11 @@ import VaccineList from './Pages/Vaccine/VaccineList';
 import VaccinationRecords from './Pages/Vaccination/VaccinationRecords';
 import ScheduleList from './Pages/Schedules/ScheduleList';
 import ScheduleVaccination from './Pages/Appointment/ScheduleVaccination';
+import ShowReports from './Pages/Reports/ShowReports';
 
 const ApplicationComponent = () => {
 
-  // let loggedInUser = useSelector((state) => state.UserReducer.User)
   let userAdmin = localStorage.getItem("isAdmin") == "true" ? true : false
-  // console.log("from main app: " + JSON.stringify(loggedInUser) )
-  // console.log("from main app: " + JSON.stringify(loggedInUser) + " " + typeof loggedInUser)
 
   return (
     <Router>
@@ -34,6 +31,7 @@ const ApplicationComponent = () => {
             <Route path="/register-hospital" element={<RegisterHospital />} />
             <Route path="/vaccination-records" element={<VaccinationRecords />} />  
             <Route path="/pending-schedules" element={<ScheduleList />} />
+            <Route path="/reports" element={<ShowReports />} />
           </>
           : 
           <Route path="/home" element={<UserSection />} />

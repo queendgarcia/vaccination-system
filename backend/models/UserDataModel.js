@@ -10,9 +10,9 @@ let userSchema = new schemaObject({
   name: {type: String, required : true},
   age: {type: Number, required : true},
   contact: {type: String, required : true},
+  sex: {type: String, required : true},
   address: String,
   profession: String,
-  sex:  String,
   diagnosis: String
 },
 {

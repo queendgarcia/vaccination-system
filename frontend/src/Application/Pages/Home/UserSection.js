@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import {  useDispatch } from 'react-redux'
 import { AddUserToStore } from '../../../State/User/userAction'
@@ -29,7 +29,12 @@ const UserSection = () => {
   return (
     <>
       <Container className="full-height">
-        <Row className="py-5">
+        <Row>
+          <Col className='pt-3 display-right'>
+            <Button onClick={()=> window.location.assign(window.location.origin + "/login")} className="custom-btn">Logout</Button>
+          </Col>
+        </Row>
+        <Row className="py-3">
           <Col><h2 className="text1">USER SECTION</h2></Col>
         </Row>
         <Row className="center-element">

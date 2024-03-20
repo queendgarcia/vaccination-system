@@ -8,7 +8,9 @@ UserRoute.post("/sign-up", (req,res) => {
   UserDataModel.findOne({ email: req.body.email}).then((existingUser) => {
     if (existingUser) {
       console.log("Email is already in-use.")
-      res.send({ existingEmail: true})
+      // res.send({ existingEmail: true})
+      res.status(401).json({ error: "Email is already existing"})
+
     } else {
       let newUser = new UserDataModel(user);
       newUser.save().then((createdUser) => {
@@ -26,12 +28,13 @@ UserRoute.post("/sign-up", (req,res) => {
         })
       }).catch((err) => {
         console.log("Error Signing-Up", err);
-        res.send("Error while Signing Up")
+        // res.send("Error while Signing Up")
+        res.status(401).json({ error: "Error while Signing Up"})
       })
     }
   }).catch((err) => {
     console.log("Error While Signing Up");
-    res.send("Error while Signing Up", err);
+    res.status(401).json({ error: "Error while Signing Up"})
   })
 
 })
