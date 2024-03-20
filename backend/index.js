@@ -13,6 +13,12 @@ const hospitalRoutes = require("./router/hospital-route");
 const vaccineApp = express();
 const vaccineRoutes = require("./router/vaccine-route");
 
+const scheduleApp = express();
+const scheduleRoutes = require("./router/schedule-route");
+
+const vaccinationRecordsApp = express();
+const vaccinationRecordsRoute = require("./router/vaccination-records-route");
+
 app.use(cors()); 
 // enabling cross-origin resource sharing at root level
 app.use('/static', express.static('public'))
@@ -30,6 +36,12 @@ hospitalApp.use('/', hospitalRoutes)
 
 app.use('/vaccine', vaccineApp) 
 vaccineApp.use('/', vaccineRoutes)
+
+app.use('/schedule', scheduleApp) 
+scheduleApp.use('/', scheduleRoutes)
+
+app.use('/vaccination-records', vaccinationRecordsApp) 
+vaccinationRecordsApp.use('/', vaccinationRecordsRoute)
 
 app.listen(9000)
 console.log("API is running at http://localhost:9000")
