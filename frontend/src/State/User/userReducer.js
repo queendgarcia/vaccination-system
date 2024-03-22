@@ -12,7 +12,8 @@ const Initial_State = {
     profession: "",
     sex: "",
     diagnosis: ""
-  }
+  },
+  UserSchedule : {}
 }
 
 let UserReducer =  (state = Initial_State, action) => {
@@ -21,6 +22,8 @@ let UserReducer =  (state = Initial_State, action) => {
       return {...state, User: action.payload }
     case ActionTypes.RemoveUserFromStore :
       return {...state, User: action.payload }
+    case ActionTypes.AddUserScheduleToStore :
+      return {...state, UserSchedule: action.payload}
     default :
       return state
   }

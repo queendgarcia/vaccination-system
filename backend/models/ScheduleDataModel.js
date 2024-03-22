@@ -5,6 +5,7 @@ mongooseObject.connect("mongodb://127.0.0.1/vaccination-system");
 
 let scheduleSchema = new schemaObject({
   vaccinationSchedule: { type: Date, default: new Date() },
+  userId : String,
   hospital : {
     _id: String,
     name: {type: String, required: true},

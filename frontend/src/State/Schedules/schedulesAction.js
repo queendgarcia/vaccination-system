@@ -1,5 +1,6 @@
 import * as ActionTypes from "../actionTypes";
 import axios from "axios";
+import { AddUserScheduleToStore } from "../User/userAction";
 
 const url = "http://localhost:9000/schedule";
 
@@ -60,6 +61,19 @@ export const createSchedule = (details) => {
     })
     .catch((err)=>{
       console.log("Error While Creating Vaccination Schedule", err)
+    })
+  }
+}
+
+export const getUserSchedule = (userId) => {
+  return function (dispatch) {
+    axios.get(`${url}/user?id=${userId}`)
+    .then((res)=>{
+      let userSchedule = res.data;
+      dispatch(AddUserScheduleToStore(userSchedule))
+    })
+    .catch((err)=>{
+      console.log("Error While Getting User's Vaccination Schedule", err)
     })
   }
 }

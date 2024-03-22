@@ -75,6 +75,7 @@ const ScheduleVaccination = () => {
 
     let requestSched = {
       vaccinationSchedule: selectedDate,
+      userId: userDetails._id,
       hospital: selectedHospital,
       vaccine: selectedVaccine,
       user: userDetails

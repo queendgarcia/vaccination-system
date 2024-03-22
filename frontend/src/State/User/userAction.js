@@ -7,6 +7,13 @@ export const AddUserToStore = (user) => {
   }
 }
 
+export const AddUserScheduleToStore = (schedule) => {
+  return {
+    type: ActionTypes.AddUserScheduleToStore,
+    payload: schedule
+  }
+}
+
 export const RemoveUserFromStore = (user) => {
   return {
     type: ActionTypes.RemoveUserFromStore,

@@ -5,7 +5,7 @@ const VaccinationRecordsDataModel = require("../models/VaccinationRecordsDataMod
 
 scheduleRoute.post("/complete", (req,res) => {
   let scheduleRecord = req.body;
-  // let newVaccinationScheduleRecord = new ScheduleDataModel(vaccineInfo);
+  //req.body should have scheduleId property with the _id valud
 
   VaccinationRecordsDataModel.findOne({ userId: scheduleRecord.user._id }).then((existingRecord) => {
     if (existingRecord)  {
@@ -43,7 +43,6 @@ scheduleRoute.post("/complete", (req,res) => {
 
       newVaccinationRecord.save().then((newRecord) => {
         console.log("Successful Saving New Vaccination Record");
-        // res.send(newRecord);
          
         // remove the approved schedule from the pending schedules
         ScheduleDataModel.deleteOne({ _id: scheduleRecord.scheduleId }).then((schedule) => {
@@ -80,6 +79,19 @@ scheduleRoute.post("/create", (req,res) => {
     res.send(createdSchedule);
   }).catch((err) => {
     res.send("Error while Creating a Schedule");
+  })
+})
+
+scheduleRoute.get("/user", (req,res) => {
+  debugger;
+  console.log("from user schedule: " + req)
+  ScheduleDataModel.find({ userId : req.query.id })
+  .then((schedules) => {
+    res.send(schedules);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.send("Error in Getting User's Schedules");
   })
 })
 
