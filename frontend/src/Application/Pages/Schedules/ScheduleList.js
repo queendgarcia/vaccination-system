@@ -13,6 +13,7 @@ const ScheduleList = () => {
 
   useEffect(() => {
     dispatchAction(fetchPendingSchedules())
+    
   },[])
 
   let completeScheduleBtnClick = (schedule) => {
@@ -59,7 +60,14 @@ const ScheduleList = () => {
                       <td>{schedule.vaccine.name}</td>
                       <td>{moment(schedule.vaccinationSchedule).utc().format("MM-DD-YYYY")}</td>
                       <td>
-                        <Button onClick={() => completeScheduleBtnClick(schedule)}>Complete</Button>
+                        {
+                          (moment(schedule.vaccinationSchedule)).isAfter(moment(new Date()))
+                          
+                          ?
+                          <Button onClick={() => completeScheduleBtnClick(schedule)}>Complete</Button>
+                          :
+                          <Button disabled>Not Completed</Button>
+                        }
                       </td>
                     </tr>
                   )

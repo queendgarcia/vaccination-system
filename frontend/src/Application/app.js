@@ -2,6 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./app.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import LoginUser from './Pages/User/LoginUser';
 import RegisterUser from './Pages/User/RegisterUser';
 import UserSection from './Pages/Home/UserSection';
@@ -17,13 +20,16 @@ import ShowReports from './Pages/Reports/ShowReports';
 
 const ApplicationComponent = () => {
 
+  let isLoggedIn = localStorage.getItem("isAdmin") != undefined ? true : false;
+  console.log("isLoggedIn", isLoggedIn)
   let userAdmin = localStorage.getItem("isAdmin") == "true" ? true : false
+
 
   return (
     <Router>
       <Routes>
         {
-          userAdmin
+          userAdmin 
           ? 
           <>
             <Route path="/home" element={<AdminSection />} />
@@ -34,13 +40,21 @@ const ApplicationComponent = () => {
             <Route path="/reports" element={<ShowReports />} />
           </>
           : 
-          <Route path="/home" element={<UserSection />} />
+          isLoggedIn ? <Route path="/home" element={<UserSection />} /> : <></>
         }
-        <Route path="/login" element={<LoginUser />} />
-        <Route path="/register" element={<RegisterUser />} />
-        <Route path="/hospitals" element={<HospitalList />} />
-        <Route path="/vaccines" element={<VaccineList />} />
-        <Route path="/schedule-vaccination" element={<ScheduleVaccination />} />
+          <Route path="/login" element={<LoginUser />} />
+          <Route path="/register" element={<RegisterUser />} />
+          {
+            isLoggedIn ?
+            <>
+              <Route path="/hospitals" element={<HospitalList />} />
+              <Route path="/vaccines" element={<VaccineList />} />
+              <Route path="/schedule-vaccination" element={<ScheduleVaccination />} />
+            </>
+            :
+            <></>
+          }
+        
       </Routes>
     </Router>
   )

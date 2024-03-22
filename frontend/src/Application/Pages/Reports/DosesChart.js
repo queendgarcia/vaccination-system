@@ -25,7 +25,7 @@ const DosesChart = (props) => {
 
     for ( let i=0; i<=6;  i++) {
       let element = moment(dateToday).subtract(dateDiff, 'days').utc().format("MM/DD")
-      console.log(element, typeof element)
+      //console.log(element, typeof element)
       dateRange.push(element)
       dateDiff--;
     }
@@ -39,7 +39,7 @@ const DosesChart = (props) => {
     
     for ( const dose of record.dosesSupplied) {
       let doseDate = moment(dose.vaccinationSchedule).utc().format("MM/DD");
-      console.log(doseDate)
+      //console.log(doseDate)
 
       switch(true) {
         case labels[0] == doseDate : dosePerDay[0] +=1; break;
@@ -48,11 +48,12 @@ const DosesChart = (props) => {
         case labels[3] == doseDate : dosePerDay[3] +=1; break;
         case labels[4] == doseDate : dosePerDay[4] +=1; break;
         case labels[5] == doseDate : dosePerDay[5] +=1; break;
+        case labels[6] == doseDate : dosePerDay[6] +=1; break;
       }
     }
   })
 
-  console.log(dosePerDay, dosePerDay)
+  //console.log(dosePerDay, dosePerDay)
 
   ChartJS.register(
     CategoryScale,

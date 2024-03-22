@@ -48,6 +48,17 @@ body {
   color: #688797;
 }
 
+.text3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 100px;
+  font-weight: 900;
+  color: #f38a91;
+}
+
+.card-body-slider {
+  padding: 0;
+}
+
 .color2 {
   color: #688797;
 }
@@ -59,6 +70,15 @@ body {
   background: rgba( 255, 255, 255, 1 );
 	box-shadow: 0 5px 20px 0 #f7dbdd;
 	backdrop-filter: blur( 20.0px );
+}
+
+.card-slider {
+  height: 300px;
+  padding: 20px;
+	border-radius: 15px;
+  background: rgba( 255, 255, 255, 1 );
+	box-shadow: 0 0px 0px 0 #f7dbdd;
+	backdrop-filter: blur( 0px );
 }
 
 .custom-btn {
@@ -84,4 +104,8 @@ body {
 
 .input-error {
   border-color: #dc3545 !important;
+}
+
+.slick-slide > div {
+  margin: 0 10px;
 }

@@ -5,7 +5,7 @@ import { ArcElement } from "chart.js";
 import Chart from "chart.js/auto";
 
 const AgeChart = (props) => {
-  console.log("from pieChart", props.vaccinationRecords)
+  // console.log("from pieChart", props.vaccinationRecords)
 
   let {vaccinationRecords} = props
   

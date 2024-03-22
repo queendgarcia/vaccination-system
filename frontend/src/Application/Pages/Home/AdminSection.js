@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AgeChart from '../Reports/AgeChart'
 import MaleFemaleChart from '../Reports/MaleFemaleChart'
 import { fetchVaccinationRecords } from '../../../State/VaccinationRecords/vaccinationRecordsAction'
+import WatchList from '../Reports/WatchList'
 
 const AdminSection = () => {
 
@@ -65,16 +66,16 @@ const AdminSection = () => {
               </Col>
             </Row>
             <Row>
-              <Col className="mb-3" md={7}>
+              <Col className="mb-3" md={8}>
                 <Row>
                   <Col className="my-3" md={12}>
                     <Row>
-                      <Col md={6}>
+                      <Col md={6} className="mb-3">
                         <Card onClick={() => navigateToPage("vaccination-records")}>
                           <Card.Body><h2 className="text2">VACCINATION RECORDS</h2></Card.Body>
                         </Card>
                       </Col>
-                      <Col md={6}>
+                      <Col md={6} className="mb-3" >
                         <Card onClick={() => navigateToPage("reports")}>
                           <Card.Body><h2 className="text2">SHOW REPORTS</h2></Card.Body>
                         </Card>
@@ -82,14 +83,11 @@ const AdminSection = () => {
                     </Row>
                   </Col>
                   <Col md={12}>
-                    <Card className="p-3" onClick={() => navigateToPage("reports")}>
-                      <Card.Title className='text-center'> Vaccination Records Per Month</Card.Title>
-                      <MaleFemaleChart vaccinationRecords={vaccinationRecords}/>
-                    </Card>
+                    <WatchList vaccinationRecords={vaccinationRecords}/>
                   </Col>
                 </Row>
               </Col>
-              <Col className="my-3" md={5}>
+              <Col className="my-3" md={4}>
                 <Card className="p-3" onClick={() => navigateToPage("reports")}>
                   <Card.Title className='my-2 text-center'>Vaccinated Persons by Age</Card.Title>
                   <AgeChart vaccinationRecords={vaccinationRecords}/>
